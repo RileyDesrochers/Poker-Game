@@ -1,0 +1,45 @@
+hand encoding standerd
+1st entry
+[0...]=Error/unsolved
+[1...]=High Card
+[2...]=Singe Pair
+[3...]=Two Pair
+[4...]=Three of a Kind
+[5...]=Straight
+[6...]=Flush
+[7...]=Full House
+[8...]=Quads
+[9...]=Straignt Flush
+[10]=Royal Flush
+
+2nd entry is the name of the hand in a string
+
+3rd+ entry
+	for 5 and 9
+		the type of the lowest card in the straight A=1, 2=2... 10=10.
+
+	for 8
+		the type of the quads
+		the type of the highest high card
+
+	for 7
+		the type of the card that makes the 3 of a kind
+		the type of the card that makes the pair
+
+	for 6
+		one entry for each type of each card starting with the highest
+
+	for 4
+		the type of the card that makes the 3 of a kind
+		Two entrys of the high card values starting with the highest
+
+	for 3
+		Two entrys for the types of cards that make up each pair starting with the highest
+		One entry of the high card value
+
+	for 2
+		One entry for the type of the pair
+		Three Enterys for each type of each high card
+
+	for 1
+		Five entrys for each high card

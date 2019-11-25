@@ -1,0 +1,59 @@
+<div>
+<input></input>
+<button className="bettingSquere" >{this.props.game.trips}</button>
+<button className="placeHolder" >0</button>
+</div>
+<div>
+<button className="bettingSquere" >{this.props.game.antie}</button>
+<button className="bettingSquere" >{this.props.game.blind}</button>
+</div>
+<div>
+<button className="bettingSquere" >{this.props.game.play}</button>
+<button className="placeHolder" >0</button>
+</div>
+
+
+class GameBoard extends React.Component {
+  render() {
+    return (
+      <div className="gameBoard">
+        <table>
+          <tbody>
+            <tr>
+              <th><input id="trips" className="inp"></input></th>
+              <th><button onClick={() => this.props.onClick("trips")}>place bet</button></th>
+              <th><button className="bettingSquere" >{this.props.game.trips}</button></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+}}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trips: 0,
+    };
+  }
+
+  handleClick(type) {
+    var state = this.state;
+    state.trips=document.getElementById("trips").value;
+    this.state=state;
+  }
+
+  render() {
+    return (
+      <div align="center">
+        <GameBoard game={this.state} onClick={i => this.handleClick(i)} />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+className=""
