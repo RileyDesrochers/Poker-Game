@@ -4,7 +4,7 @@ import './App.css';
 function Card(props) {
   if(props.id>=52||props.id<0){
     return (
-        <button className="unknownCard"><p className="unknownCardPrint">?</p></button>
+        <button className="card"><p className="unknownCardPrint">?</p></button>
     );
   }
 
@@ -40,8 +40,8 @@ function Card(props) {
     break;
     default:
       type=parseInt(props.id%13+2, 10);
-  } 
-  
+  }
+
   return (
     <button className={"card " + sute[0]}><p className="print" align="left">{type}</p> <p className="print" align="right">{sute[1]}</p></button>
   );
@@ -56,7 +56,7 @@ class GameBoard extends React.Component {
         if (this.props.game.play===0 && this.props.game.gamePhase!==0 && this.props.game.gamePhase!==4){
           showPlay = "";
         }
-        
+
         var display = ["", "4X", "2X", "1X", ""];
 
         var nextText;
@@ -144,7 +144,7 @@ class GameBoard extends React.Component {
               <th></th>
             </tr>
             <tr>
-              <th><input id="trips" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
+              <th><input id="trips" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
               <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("trips")}>place bet</button></th>
               <th><button className="bettingSquere">{this.props.game.trips}</button></th>
               <th></th>
@@ -158,7 +158,7 @@ class GameBoard extends React.Component {
               <th><p><b>Blind</b></p></th>
             </tr>
             <tr>
-              <th><input id="ante" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
+              <th><input id="ante" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
               <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("ante")}>place bet</button></th>
               <th><button className="bettingSquere" >{this.props.game.ante}</button></th>
               <th><b>=</b></th>
@@ -212,11 +212,11 @@ class App extends Component {
     var val,dif,input;
     if(type==="trips"){
       if(state.gamePhase!==0){
-        return; 
+        return;
       }
       val = parseInt(document.getElementById(type).value, 10);
-      if(Number.isNaN(val)){
-        alert("please enter an integer in the input field");
+      if(Number.isNaN(val)||val<0){
+        alert("please enter a positive integer in the input field");
         return;
       }
       if(this.canBet(val, state.trips)){
@@ -229,11 +229,11 @@ class App extends Component {
 
     else if(type==="ante"){
       if(state.gamePhase!==0){
-        return; 
+        return;
       }
       val = parseInt(document.getElementById(type).value, 10);
-      if(Number.isNaN(val)){
-        alert("please enter an integer in the input field");
+      if(Number.isNaN(val)||val<=0){
+        alert("please enter a positive integer in the input field");
         return;
       }
       if(this.canBet(val*2, state.ante)){
@@ -252,17 +252,17 @@ class App extends Component {
       switch (state.gamePhase) {
         case 0:
           return;
-        case 1: 
+        case 1:
           val = state.ante*4;
           break;
-        case 2: 
+        case 2:
           val = state.ante*2;
           break;
-        case 3: 
+        case 3:
           val = state.ante;
           break;
         case 4:
-          return; 
+          return;
         default:
           throw "unknownGamePhase";
       }
@@ -341,16 +341,16 @@ class App extends Component {
                 alertMsg += "You have a Straight! Blind pays 1X, you win " + state.ante + "\n";
                 break;
               case 6:
-                state.wallet += state.ante*2.5;
-                alertMsg += "You have a Flush! Blind pays 1.5X, you win " + state.ante*1.5 + "\n";
+                state.wallet += state.ante*2;
+                alertMsg += "You have a Flush! Blind pays 1X, you win " + state.ante*1.5 + "\n";
                 break;
               case 7:
                 state.wallet += state.ante*4;
                 alertMsg += "You have a Full House! Blind pays 3X, you win " + state.ante*3 + "\n";
                 break;
               case 8:
-                state.wallet += state.ante*11;
-                alertMsg += "You have Quads! Blind pays 10X, you win " + state.ante*10 + "\n";
+                state.wallet += state.ante*13;
+                alertMsg += "You have Quads! Blind pays 12X, you win " + state.ante*10 + "\n";
                 break;
               case 9:
                 state.wallet += state.ante*51;
@@ -430,7 +430,7 @@ class App extends Component {
       alert("You dont have enough money for this!");
       return false;
     }
-    
+
     return true;
   }
 
@@ -438,7 +438,11 @@ class App extends Component {
     return (//todo: sanitize input, add calculate winner function
       <div align="center">
         <h1>ultimate texas holdem!</h1>
-        <GameBoard game={this.state} onClick={i => this.handleClick(i)} />
+        <div align="center" class="grid">
+          <div>
+            <GameBoard game={this.state} onClick={i => this.handleClick(i)} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -535,7 +539,7 @@ function straightHelper(hand){
   }
   if((weel & hand)===weel){
       return 1;
-  } 
+  }
   return 0;
 }
 
