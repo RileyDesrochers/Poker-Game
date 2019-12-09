@@ -1,53 +1,63 @@
 import React, { Component } from 'react';
 import './App.css';
+import {Card} from './card.js';
+import logo from "./info.png"
+class GameBoard extends React.Component {
+  render() {
+        var playersHand;
+        if(this.props.game.playersHand===0){
+          playersHand="";
+        }else{
+          playersHand=": "+this.props.game.playersHand[1];
+        }
 
-function Card(props) {
-  if(props.id>=52||props.id<0){
+        var dealersHand;
+        if(this.props.game.dealersHand===0){
+          dealersHand="";
+        }else{
+          dealersHand=": "+this.props.game.dealersHand[1];
+        }
+
     return (
-        <button className="card"><p className="unknownCardPrint">?</p></button>
+      <div>
+        <h2>Dealers Cards {dealersHand}</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th><Card id={this.props.game.dealersCards[0]} /></th>
+              <th><Card id={this.props.game.dealersCards[1]} /></th>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <h2>Community Card</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th><Card id={this.props.game.communityCards[0]} /></th>
+              <th><Card id={this.props.game.communityCards[1]} /></th>
+              <th><Card id={this.props.game.communityCards[2]} /></th>
+              <th><Card id={this.props.game.communityCards[3]} /></th>
+              <th><Card id={this.props.game.communityCards[4]} /></th>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <h2>Your Hand {playersHand}</h2>
+        <table>
+          <tbody>
+            <tr>
+              <th><Card id={this.props.game.playerCards[0]} /></th>
+              <th><Card id={this.props.game.playerCards[1]} /></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     );
   }
-
-  var type;
-  var sute=["",''];
-
-  if(props.id<13){
-    sute[0]="heart";
-    sute[1]='\u2665';//Heart
-  }else if(props.id<26){
-    sute[0]="club";
-    sute[1]='\u2663';//Club
-  }else if(props.id<39){
-    sute[0]="diamond";
-    sute[1]='\u2666';//Diamond
-  }else{
-    sute[0]="spade";
-    sute[1]='\u2660';//Spade
-  }
-
-  switch(props.id%13) {
-    case 12:
-      type="A";
-    break;
-    case 11:
-      type="K";
-    break;
-    case 10:
-      type="Q";
-    break;
-    case 9:
-      type="J";
-    break;
-    default:
-      type=parseInt(props.id%13+2, 10);
-  }
-
-  return (
-    <button className={"card " + sute[0]}><p className="print" align="left">{type}</p> <p className="print" align="right">{sute[1]}</p></button>
-  );
 }
 
-class GameBoard extends React.Component {
+class BettingBoard extends React.Component {
   render() {
 
         var show = ["", "hide", "hide", "hide", "hide"];
@@ -74,116 +84,64 @@ class GameBoard extends React.Component {
           nextText = "Next";
         }
 
-        var playersHand;
-        if(this.props.game.playersHand===0){
-          playersHand="";
-        }else{
-          playersHand=": "+this.props.game.playersHand[1];
-        }
-
-        var dealersHand;
-        if(this.props.game.dealersHand===0){
-          dealersHand="";
-        }else{
-          dealersHand=": "+this.props.game.dealersHand[1];
-        }
-
     return (
-      <div className="gameBoard">
-        <div id="dealersCards">
-          <h2>Dealers Cards{dealersHand}</h2>
-          <table>
-            <tbody>
-              <tr>
-                <th><Card id={this.props.game.dealersCards[0]} /></th>
-                <th><Card id={this.props.game.dealersCards[1]} /></th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <br />
-        <div id="communityCard">
-          <h2>Community Card</h2>
-          <table>
-            <tbody>
-              <tr>
-                <th><Card id={this.props.game.communityCards[0]} /></th>
-                <th><Card id={this.props.game.communityCards[1]} /></th>
-                <th><Card id={this.props.game.communityCards[2]} /></th>
-                <th><Card id={this.props.game.communityCards[3]} /></th>
-                <th><Card id={this.props.game.communityCards[4]} /></th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <br />
-        <div id="yourHand">
-          <h2>Your Hand{playersHand}</h2>
-          <table>
-            <tbody>
-              <tr>
-                <th><Card id={this.props.game.playerCards[0]} /></th>
-                <th><Card id={this.props.game.playerCards[1]} /></th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <br />
-        <br />
-        <br />
-        <h2>wallet: {this.props.game.wallet}</h2>
-        <br />
-        <br />
-        <table>
-          <tbody>
-            <tr>
-              <th></th>
-              <th></th>
-              <th><p><b>Trips</b></p></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <th><input id="trips" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
-              <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("trips")}>place bet</button></th>
-              <th><button className="bettingSquere">{this.props.game.trips}</button></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th><p><b>Ante</b></p></th>
-              <th></th>
-              <th><p><b>Blind</b></p></th>
-            </tr>
-            <tr>
-              <th><input id="ante" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
-              <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("ante")}>place bet</button></th>
-              <th><button className="bettingSquere" >{this.props.game.ante}</button></th>
-              <th><b>=</b></th>
-              <th><button className="bettingSquere" >{this.props.game.blind}</button></th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th><p><b>Play</b></p></th>
-              <th></th>
-              <th></th>
-            </tr>
-            <tr>
-              <th><p className={showPlay}><b>{display[this.props.game.gamePhase]}</b></p></th>
-              <th><button className={showPlay} onClick={() => this.props.onClick("play")}>place bet</button></th>
-              <th><button className="bettingSquere" >{this.props.game.play}</button></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </tbody>
-        </table>
-        <br />
-        <button onClick={() => this.props.onClick("start")}>{nextText}</button>
-      </div>
+    <div>
+      <h2>wallet: {this.props.game.wallet}</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><p><b>Trips</b></p></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th><input id="trips" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
+            <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("trips")}>place bet</button></th>
+            <th><button className="bettingSquere">{this.props.game.trips}</button></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><p><b>Ante</b></p></th>
+            <th></th>
+            <th><p><b>Blind</b></p></th>
+          </tr>
+          <tr>
+            <th><input id="ante" type="number" className={"inp "+ show[this.props.game.gamePhase]}></input></th>
+            <th><button className={show[this.props.game.gamePhase]} onClick={() => this.props.onClick("ante")}>place bet</button></th>
+            <th><button className="bettingSquere" >{this.props.game.ante}</button></th>
+            <th><b>=</b></th>
+            <th><button className="bettingSquere" >{this.props.game.ante}</button></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><p><b>Play</b></p></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th><p className={showPlay}><b>{display[this.props.game.gamePhase]}</b></p></th>
+            <th><button className={showPlay} onClick={() => this.props.onClick("play")}>place bet</button></th>
+            <th><button className="bettingSquere" >{this.props.game.play}</button></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <button onClick={() => this.props.onClick("start")}>{nextText}</button>
+      <br />
+      <br />
+      <a href="https://wizardofodds.com/games/ultimate-texas-hold-em">
+        <img src={logo} height="100px" width="100px" />
+      </a>
+    </div>
     );
   }
 }
@@ -202,7 +160,6 @@ class App extends Component {
       wallet: 1000,
       trips: 0,
       ante: 0,
-      blind: 0,
       play: 0,
     };
   }
@@ -236,11 +193,10 @@ class App extends Component {
         alert("please enter a positive integer in the input field");
         return;
       }
-      if(this.canBet(val*2, state.ante)){
+      if(this.canBet(val*2, state.ante)){//
         dif = val*2 - state.ante*2;
         state.wallet -= dif;
         state.ante = val;
-        state.blind = val;
         this.setState(state);
       }
     }
@@ -414,7 +370,6 @@ class App extends Component {
           state.gamePhase = 0;
           state.trips = 0;
           state.ante = 0;
-          state.blind = 0;
           state.play = 0;
           this.setState(state);
           break;
@@ -435,13 +390,15 @@ class App extends Component {
   }
 
   render() {
-    return (//todo: sanitize input, add calculate winner function
-      <div align="center">
-        <h1>ultimate texas holdem!</h1>
-        <div align="center" class="grid">
-          <div>
-            <GameBoard game={this.state} onClick={i => this.handleClick(i)} />
-          </div>
+
+    return (//todo: add recommended move
+      <div align="center" class="grid">
+        <div>
+          <h1>ultimate texas holdem!</h1>
+          <GameBoard game={this.state} />
+        </div>
+        <div className="BettingBoard">
+          <BettingBoard game={this.state} onClick={i => this.handleClick(i)} />
         </div>
       </div>
     );
@@ -462,8 +419,7 @@ function shuffle(deck){
   return deck;
 }
 
-
-function calculateHand(cards){
+export function calculateHand(cards){
   var bit =1;
   var hand=[0, 0, 0, 0];
   for (var i=0; i<cards.length; i++){

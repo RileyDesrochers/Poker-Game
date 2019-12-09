@@ -1,48 +1,34 @@
+body{
+  background: #004000;
+}
+
+.link {
+  color: black;
+}
+
 .bettingSquere {
-  background: #006400;
+  background: #008000;
   border: 4px solid #000000;
   font-weight: bold;
   color: #ffffff;
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 60% auto;
+  grid-template-columns: 60% 40%;
+  height: 650px;
 }
+
 
 .inp {
   width: 50px;
 }
 
-.placeHolder {
-  visibility: hidden;
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
-}
-
-.gameBoard {
-  background: #006400;
-  border: 1px solid #000000;
-  height: 1200px;
-  width: 90%;
-  border-radius: 50px;
-}
-
-.card {
-  background: #ffffff;
-  border: 1px solid #000000;
-  height: 70px;
-  width: 50px;
-  border-radius: 8px;
-  padding-top: 0px;
-  padding-right: 2px;
-  padding-left: 4px;
-  margin-bottom: 0px;
-  margin-top: 0px;
+.BettingBoard {
+  background: #008000;
 }
 
 .heart {
@@ -61,13 +47,17 @@
   color: #000000;
 }
 
-.unknownCard {
+.card {
   background: #ffffff;
   border: 1px solid #000000;
   height: 70px;
   width: 50px;
   border-radius: 8px;
-  color: #000000;
+  padding-top: 0px;
+  padding-right: 2px;
+  padding-left: 4px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .print {
@@ -75,7 +65,7 @@
   font-weight: bold;
   line-height: 15px;
   margin-top: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   margin-left: 0px;
   margin-right: 0px;
   padding-top: 0px 0px 0px 0px;
@@ -95,6 +85,6 @@
   visibility: hidden;
 }
 
-.hide {
+.disp {
   display: none;
 }
